@@ -46,8 +46,8 @@ SkillMatch/
 
 ## Phase 0 — Project Setup
 
-1. Initialize the git repo and add `.gitignore` (`dotnet new gitignore`).
-2. Create the solution and projects:
+- [x] Initialize the git repo and add `.gitignore` (`dotnet new gitignore`).
+- [x] Create the solution and projects:
    ```bash
    dotnet new sln -n SkillMatch
    dotnet new console  -n SkillMatch.Cli        -o src/SkillMatch.Cli
@@ -57,8 +57,8 @@ SkillMatch/
    dotnet add src/SkillMatch.Cli reference src/SkillMatch.Core
    dotnet add tests/SkillMatch.Core.Tests reference src/SkillMatch.Core
    ```
-3. Turn on `<Nullable>enable</Nullable>` and `<TreatWarningsAsErrors>true</TreatWarningsAsErrors>` (you can put them in `Directory.Build.props`).
-4. Add a minimal `README.md`.
+- [x] Turn on `<Nullable>enable</Nullable>` and `<TreatWarningsAsErrors>true</TreatWarningsAsErrors>` (you can put them in `Directory.Build.props`).
+- [x] Add a minimal `README.md`.
 
 **Done when:** `dotnet build` and `dotnet test` pass on an empty solution.
 
@@ -66,11 +66,11 @@ SkillMatch/
 
 ## Phase 1 — Domain Model (`SkillMatch.Core`)
 
-1. `SkillCategory`, an enum: `Language`, `Framework`, `Database`, `Cloud`, `DevOps`, `Tool`, `Methodology`, `SoftSkill`, `Other`.
-2. `SkillDefinition`, a record: `Name` (canonical), `Category`, `Aliases` (string list).
-3. `ExtractedSkill`, a record: `Definition`, `Importance` (`Required` / `NiceToHave`), `Occurrences`.
-4. `UserSkill`, a record: `Name`, `Level` (1–5 or `Beginner/Intermediate/Advanced/Expert`), `YearsOfExperience` (optional).
-5. `MatchResult`, a record: `Matched`, `Missing`, `Extra` (skills you have that the vacancy doesn't ask for), `Score`, grouped by category.
+- [ ] `SkillCategory`, an enum: `Language`, `Framework`, `Database`, `Cloud`, `DevOps`, `Tool`, `Methodology`, `SoftSkill`, `Other`.
+- [ ] `SkillDefinition`, a record: `Name` (canonical), `Category`, `Aliases` (string list).
+- [ ] `ExtractedSkill`, a record: `Definition`, `Importance` (`Required` / `NiceToHave`), `Occurrences`.
+- [ ] `UserSkill`, a record: `Name`, `Level` (1–5 or `Beginner/Intermediate/Advanced/Expert`), `YearsOfExperience` (optional).
+- [ ] `MatchResult`, a record: `Matched`, `Missing`, `Extra` (skills you have that the vacancy doesn't ask for), `Score`, grouped by category.
 
 **Done when:** the models compile and have no dependencies on I/O.
 
@@ -78,7 +78,7 @@ SkillMatch/
 
 ## Phase 2 — Skills Taxonomy
 
-1. Create `data/skills-taxonomy.json` with about 100–150 common skills to start:
+- [ ] Create `data/skills-taxonomy.json` with about 100–150 common skills to start:
    ```json
    [
      { "name": "C#",           "category": "Language",  "aliases": ["c#", "csharp", "c sharp"] },
@@ -88,8 +88,8 @@ SkillMatch/
      { "name": "Docker",       "category": "DevOps",    "aliases": ["docker", "containers"] }
    ]
    ```
-2. Add `ITaxonomyProvider` with a `JsonTaxonomyProvider` implementation.
-3. Check the data at load time: no duplicate canonical names, and no alias that points to two different skills.
+- [ ] Add `ITaxonomyProvider` with a `JsonTaxonomyProvider` implementation.
+- [ ] Check the data at load time: no duplicate canonical names, and no alias that points to two different skills.
 
 **Done when:** the taxonomy loads, and unit tests cover the validation rules.
 
@@ -97,11 +97,11 @@ SkillMatch/
 
 ## Phase 3 — Vacancy Input
 
-1. Add an `IVacancySource` abstraction with these implementations:
+- [ ] Add an `IVacancySource` abstraction with these implementations:
    - `FileVacancySource`: `--file vacancy.txt`
    - `StdinVacancySource`: piped or pasted input (end with `Ctrl+D` / `Ctrl+Z`)
    - `ArgumentVacancySource`: `--text "..."`
-2. Normalize the text: unify line endings, remove HTML tags if present, collapse whitespace.
+- [ ] Normalize the text: unify line endings, remove HTML tags if present, collapse whitespace.
 
 **Done when:** all three input modes give the same normalized text for the same vacancy.
 
@@ -109,16 +109,16 @@ SkillMatch/
 
 ## Phase 4 — Skill Extraction (Parser)
 
-1. Define the `ISkillExtractor` interface: `IReadOnlyList<ExtractedSkill> Extract(string text)`.
-2. Build `DictionarySkillExtractor` (rule-based):
+- [ ] Define the `ISkillExtractor` interface: `IReadOnlyList<ExtractedSkill> Extract(string text)`.
+- [ ] Build `DictionarySkillExtractor` (rule-based):
    - Build one compiled regex per alias, with custom word boundaries so that `C#`, `.NET`, `C++` and `Node.js` match correctly: `(?<![\w.#+])alias(?![\w#+])`.
    - Match case-insensitively, and try longer aliases first so that `ASP.NET Core` wins over `.NET`.
    - Remove duplicates by canonical name and count the occurrences.
-3. **Section detection** (required vs nice-to-have):
+- [ ] **Section detection** (required vs nice-to-have):
    - Split the text by headings such as *Requirements*, *Must have*, *Qualifications* → `Required`.
    - *Nice to have*, *Plus*, *Bonus*, *Preferred* → `NiceToHave`.
    - Fall back to `Required` when no section is found.
-4. Group the extracted skills by `SkillCategory`.
+- [ ] Group the extracted skills by `SkillCategory`.
 
 **Done when:** tests on 3–5 real vacancy samples in `samples/vacancies/` give the expected skill sets.
 
@@ -126,7 +126,7 @@ SkillMatch/
 
 ## Phase 5 — User Skills Profile
 
-1. Create `data/my-skills.json`:
+- [ ] Create `data/my-skills.json`:
    ```json
    {
      "skills": [
@@ -136,9 +136,9 @@ SkillMatch/
      ]
    }
    ```
-2. Add `IUserProfileProvider` with a JSON implementation.
-3. Map each user skill to its canonical name through the taxonomy aliases, so that `postgres` matches `PostgreSQL`.
-4. Warn about user skills that are not in the taxonomy.
+- [ ] Add `IUserProfileProvider` with a JSON implementation.
+- [ ] Map each user skill to its canonical name through the taxonomy aliases, so that `postgres` matches `PostgreSQL`.
+- [ ] Warn about user skills that are not in the taxonomy.
 
 **Done when:** the profile loads and its skill names are mapped to canonical names.
 
@@ -146,15 +146,15 @@ SkillMatch/
 
 ## Phase 6 — Matching & Scoring
 
-1. Create `SkillMatcher.Compare(extracted, profile) → MatchResult`.
-2. Calculate:
+- [ ] Create `SkillMatcher.Compare(extracted, profile) → MatchResult`.
+- [ ] Calculate:
    - **Matched**: in both the vacancy and the profile.
    - **Missing**: in the vacancy but not in the profile, split into required and nice-to-have.
    - **Extra**: in the profile but not in the vacancy (informational only).
-3. Score formula (first version):
+- [ ] Score formula (first version):
    - Weight: Required = 1.0, NiceToHave = 0.5
    - `Score = Σ weight(matched) / Σ weight(all extracted) × 100%`
-4. Add a per-category breakdown, for example *Languages 100%, Cloud 33%*.
+- [ ] Add a per-category breakdown, for example *Languages 100%, Cloud 33%*.
 
 **Done when:** the score is deterministic and edge cases are tested (empty vacancy, empty profile, 100% match).
 
@@ -162,19 +162,19 @@ SkillMatch/
 
 ## Phase 7 — CLI & Report Output
 
-1. Build commands with `System.CommandLine`:
+- [ ] Build commands with `System.CommandLine`:
    ```bash
    skillmatch analyze --file vacancy.txt [--profile my-skills.json] [--format table|json|markdown]
    skillmatch skills list            # show your profile
    skillmatch skills add "Kubernetes" --level Beginner
    skillmatch taxonomy search "kube" # look up known skills/aliases
    ```
-2. Render the report with Spectre.Console:
+- [ ] Render the report with Spectre.Console:
    - A header with the overall match score, colored by threshold (green ≥ 75%, yellow ≥ 50%, red below that).
    - A table grouped by category with ✅ matched / ❌ missing / ➕ extra.
    - A "What to learn next" list: the missing required skills, ordered by how often the vacancy mentions them.
-3. Add `--format json` and `--format markdown` for saving or sharing reports.
-4. Return exit codes (`0` success, `1` invalid input, `2` file not found).
+- [ ] Add `--format json` and `--format markdown` for saving or sharing reports.
+- [ ] Return exit codes (`0` success, `1` invalid input, `2` file not found).
 
 **Done when:** a full run against a sample vacancy prints a readable report.
 
@@ -182,10 +182,10 @@ SkillMatch/
 
 ## Phase 8 — Testing & Quality
 
-1. Unit tests for the normalizer, the extractor (edge tokens such as `C#`, `.NET`, `C++`, `Go` vs the word "go"), section detection, and the matcher.
-2. Golden-file tests: `samples/vacancies/*.txt` → expected `*.expected.json`.
-3. Ambiguous-word handling: add a `requiresContext` flag or a stop-list for skills like `Go`, `R` and `Rust` that are also common words.
-4. Add a GitHub Actions workflow that runs `dotnet build` + `dotnet test` on each push.
+- [ ] Unit tests for the normalizer, the extractor (edge tokens such as `C#`, `.NET`, `C++`, `Go` vs the word "go"), section detection, and the matcher.
+- [ ] Golden-file tests: `samples/vacancies/*.txt` → expected `*.expected.json`.
+- [ ] Ambiguous-word handling: add a `requiresContext` flag or a stop-list for skills like `Go`, `R` and `Rust` that are also common words.
+- [ ] Add a GitHub Actions workflow that runs `dotnet build` + `dotnet test` on each push.
 
 **Done when:** code coverage of `SkillMatch.Core` is at least 80% and CI is green.
 
@@ -193,10 +193,10 @@ SkillMatch/
 
 ## Phase 9 — Packaging & Distribution
 
-1. Package as a .NET global tool (`<PackAsTool>true</PackAsTool>`, `ToolCommandName=skillmatch`).
-2. Optionally publish a single-file self-contained binary: `dotnet publish -c Release -r osx-arm64 --self-contained -p:PublishSingleFile=true`.
-3. Store the default profile in a user config directory (`~/.skillmatch/`) instead of the repo.
-4. Finish the README with installation, usage examples, and a screenshot.
+- [ ] Package as a .NET global tool (`<PackAsTool>true</PackAsTool>`, `ToolCommandName=skillmatch`).
+- [ ] Optionally publish a single-file self-contained binary: `dotnet publish -c Release -r osx-arm64 --self-contained -p:PublishSingleFile=true`.
+- [ ] Store the default profile in a user config directory (`~/.skillmatch/`) instead of the repo.
+- [ ] Finish the README with installation, usage examples, and a screenshot.
 
 **Done when:** `dotnet tool install -g --add-source ./nupkg SkillMatch` works and `skillmatch analyze` runs from any directory.
 
@@ -204,15 +204,15 @@ SkillMatch/
 
 ## Phase 10 — Future Enhancements (Backlog)
 
-- **LLM-based extractor**: an `LlmSkillExtractor : ISkillExtractor` that calls the Claude API to extract skills from free text and categorize them. It can find skills that are not in the taxonomy. You can run it together with the dictionary extractor and merge the results.
-- **Fuzzy matching**: catch typos and variants with Levenshtein distance or Jaro-Winkler.
-- **Seniority & years detection**: parse phrases like "5+ years of C#" and compare them with `YearsOfExperience` in the profile.
-- **Level-aware scoring**: a partial score when your level is below what the vacancy implies.
-- **Skill relationships**: implied skills, for example ASP.NET Core implies C# and .NET, and EF Core implies an ORM.
-- **URL input**: fetch a vacancy straight from a job-board link.
-- **Batch mode**: rank several vacancies against your profile.
-- **History**: save analyses (SQLite) and track which skills come up most often across vacancies.
-- **Taxonomy auto-growth**: suggest unknown capitalized terms as candidate skills.
+- [ ] **LLM-based extractor**: an `LlmSkillExtractor : ISkillExtractor` that calls the Claude API to extract skills from free text and categorize them. It can find skills that are not in the taxonomy. You can run it together with the dictionary extractor and merge the results.
+- [ ] **Fuzzy matching**: catch typos and variants with Levenshtein distance or Jaro-Winkler.
+- [ ] **Seniority & years detection**: parse phrases like "5+ years of C#" and compare them with `YearsOfExperience` in the profile.
+- [ ] **Level-aware scoring**: a partial score when your level is below what the vacancy implies.
+- [ ] **Skill relationships**: implied skills, for example ASP.NET Core implies C# and .NET, and EF Core implies an ORM.
+- [ ] **URL input**: fetch a vacancy straight from a job-board link.
+- [ ] **Batch mode**: rank several vacancies against your profile.
+- [ ] **History**: save analyses (SQLite) and track which skills come up most often across vacancies.
+- [ ] **Taxonomy auto-growth**: suggest unknown capitalized terms as candidate skills.
 
 ---
 
