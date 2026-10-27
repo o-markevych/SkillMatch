@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SkillMatch.Cli/SkillMatch.Cli.csproj" />
+    <Project Path="src/SkillMatch.Core/SkillMatch.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SkillMatch.Core.Tests/SkillMatch.Core.Tests.csproj" />
+  </Folder>
+</Solution>
