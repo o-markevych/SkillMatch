@@ -19,6 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\..\data\skills-taxonomy.json" Link="data\skills-taxonomy.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\src\SkillMatch.Core\SkillMatch.Core.csproj" />
   </ItemGroup>
 

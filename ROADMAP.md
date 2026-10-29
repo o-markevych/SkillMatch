@@ -78,7 +78,7 @@ SkillMatch/
 
 ## Phase 2 — Skills Taxonomy
 
-- [ ] Create `data/skills-taxonomy.json` with about 100–150 common skills to start:
+- [x] Create `data/skills-taxonomy.json` with about 100–150 common skills to start:
    ```json
    [
      { "name": "C#",           "category": "Language",  "aliases": ["c#", "csharp", "c sharp"] },
@@ -88,8 +88,8 @@ SkillMatch/
      { "name": "Docker",       "category": "DevOps",    "aliases": ["docker", "containers"] }
    ]
    ```
-- [ ] Add `ITaxonomyProvider` with a `JsonTaxonomyProvider` implementation.
-- [ ] Check the data at load time: no duplicate canonical names, and no alias that points to two different skills.
+- [x] Add `ITaxonomyProvider` with a `JsonTaxonomyProvider` implementation.
+- [x] Check the data at load time: no duplicate canonical names, and no alias that points to two different skills.
 
 **Done when:** the taxonomy loads, and unit tests cover the validation rules.
 
