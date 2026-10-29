@@ -66,11 +66,11 @@ SkillMatch/
 
 ## Phase 1 — Domain Model (`SkillMatch.Core`)
 
-- [ ] `SkillCategory`, an enum: `Language`, `Framework`, `Database`, `Cloud`, `DevOps`, `Tool`, `Methodology`, `SoftSkill`, `Other`.
-- [ ] `SkillDefinition`, a record: `Name` (canonical), `Category`, `Aliases` (string list).
-- [ ] `ExtractedSkill`, a record: `Definition`, `Importance` (`Required` / `NiceToHave`), `Occurrences`.
-- [ ] `UserSkill`, a record: `Name`, `Level` (1–5 or `Beginner/Intermediate/Advanced/Expert`), `YearsOfExperience` (optional).
-- [ ] `MatchResult`, a record: `Matched`, `Missing`, `Extra` (skills you have that the vacancy doesn't ask for), `Score`, grouped by category.
+- [x] `SkillCategory`, an enum: `Language`, `Framework`, `Database`, `Cloud`, `DevOps`, `Tool`, `Methodology`, `SoftSkill`, `Other`.
+- [x] `SkillDefinition`, a record: `Name` (canonical), `Category`, `Aliases` (string list).
+- [x] `ExtractedSkill`, a record: `Definition`, `Importance` (`Required` / `NiceToHave`), `Occurrences`.
+- [x] `UserSkill`, a record: `Name`, `Level` (1–5 or `Beginner/Intermediate/Advanced/Expert`), `YearsOfExperience` (optional).
+- [x] `MatchResult`, a record: `Matched`, `Missing`, `Extra` (skills you have that the vacancy doesn't ask for), `Score`, grouped by category.
 
 **Done when:** the models compile and have no dependencies on I/O.
 
